@@ -2,3 +2,12 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   padding: 10px;
 }
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.cards {
+}
