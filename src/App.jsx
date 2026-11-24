@@ -1,5 +1,6 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
+import Card from "./Components/Card/Card";
 import "./App.css";
 
 function App() {
@@ -10,18 +11,6 @@ function App() {
         <Card bgColor={"#CCDDFF"} fontColor={"#383838"} />
       </div>
     </>
-  );
-}
-
-function Card({ bgColor, fontColor }) {
-  return (
-    <div className="card" style={{ backgroundColor: bgColor }}>
-      <p className="color__value--background">{bgColor}</p>
-      <p className="color__role">Main Color</p>
-      <p className="color__value--contrast" style={{ color: fontColor }}>
-        {fontColor}
-      </p>
-    </div>
   );
 }
 
