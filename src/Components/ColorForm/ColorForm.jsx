@@ -1,18 +1,25 @@
-import { useState } from "react";
 import "./ColorForm.css";
-// import { nanoid } from "nanoid";
+import { useState } from "react";
 
-export default function ColorForm({
-  hexValue,
-  contrastValue,
-  role,
-  setHexValue,
-  setContrastValue,
-  setRole,
-}) {
-  // const [hexValue, setHexValue] = useState("#000000");
-  // const [contrastValue, setContrastValue] = useState("#ffffff");
-  // const [role, setRole] = useState("");
+const initialHex = "#000000";
+const initialContrastText = "#ffffff";
+const initialRole = "primary main";
+
+export default function ColorForm({ onAddColor }) {
+  const [hex, setHex] = useState(initialHex);
+  const [contrastText, setContrastText] = useState(initialContrastText);
+  const [role, setRole] = useState(initialRole);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    onAddColor(data);
+    setHex(initialHex);
+    setContrastText(initialContrastText);
+    setRole(initialRole);
+  }
+
   return (
     <>
       <form className="form__color-picker" onSubmit={handleSubmit}>
@@ -22,7 +29,6 @@ export default function ColorForm({
             type="text"
             name="role"
             id="role"
-            placeholder="Role"
             value={role}
             onInput={(event) => setRole(event.target.value)}
           />
@@ -33,29 +39,22 @@ export default function ColorForm({
             type="color"
             name="hex"
             id="hex"
-            value={hexValue}
-            onChange={(event) => setHexValue(event.target.value)}
+            value={hex}
+            onChange={(event) => setHex(event.target.value)}
           />
         </div>
         <div className="form-field">
-          <label htmlFor="contrast-text">Contract Text</label>
+          <label htmlFor="contrast-text">Contrast Text</label>
           <input
             type="color"
-            name="contrast-text"
+            name="contrastText"
             id="contrast-text"
-            value={contrastValue}
-            onChange={(event) => setContrastValue(event.target.value)}
+            value={contrastText}
+            onChange={(event) => setContrastText(event.target.value)}
           />
         </div>
         <button type="submit">Add Color</button>
       </form>
     </>
   );
-}
-
-function handleSubmit(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  console.log(event.target.value);
-  console.log(formData);
 }

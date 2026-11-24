@@ -1,26 +1,28 @@
 import { useState } from "react";
 import { initialColors } from "./lib/colors";
-import Color from "./Components/Color/Color";
+import { nanoid } from "nanoid";
 import Card from "./Components/Card/Card";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import "./App.css";
 
 function App() {
-  const [hexValue, setHexValue] = useState("#000000");
-  const [contrastValue, setContrastValue] = useState("#ffffff");
-  const [role, setRole] = useState("");
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(initialColors);
+
+  function handleAddColor(newColor) {
+    const newColorWithId = { id: nanoid(), ...newColor };
+    setCards([newColorWithId, ...cards]);
+  }
   return (
     <div className="main">
       <h1>Theme Creator</h1>
-      <ColorForm hex={hexValue} contrast={contrastValue} role={role} />
+      <ColorForm onAddColor={handleAddColor} />
       <ul className="cards">
-        {initialColors.map((initialColor) => (
+        {cards.map((card) => (
           <Card
-            key={initialColor.id}
-            hex={initialColor.hex}
-            contrastText={initialColor.contrastText}
-            role={initialColor.role}
+            key={card.id}
+            hex={card.hex}
+            contrastText={card.contrastText}
+            role={card.role}
           />
         ))}
       </ul>
