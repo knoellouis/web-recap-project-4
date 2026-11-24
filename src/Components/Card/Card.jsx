@@ -1,4 +1,4 @@
-import Card from "./Card/Card.css";
+import "./Card.css";
 
 export default function Card({ bgColor, fontColor }) {
   return (
