@@ -1,13 +1,11 @@
 import "./Card.css";
 
-export default function Card({ bgColor, fontColor }) {
+export default function Card({ role, hex, contrastText }) {
   return (
-    <div className="card" style={{ backgroundColor: bgColor }}>
-      <p className="color__value--background">{bgColor}</p>
-      <p className="color__role">Main Color</p>
-      <p className="color__value--contrast" style={{ color: fontColor }}>
-        {fontColor}
-      </p>
-    </div>
+    <li className="card" style={{ backgroundColor: hex, color: contrastText }}>
+      <p className="color__value--background">{hex}</p>
+      <p className="color__role">{role}</p>
+      <p className="color__value--contrast">{contrastText}</p>
+    </li>
   );
 }
