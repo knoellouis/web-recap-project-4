@@ -1,5 +1,5 @@
 import "./Color.css";
 
-export default function Color({ color }) {
-  return null;
-}
+// export default function Color({ color }) {
+//   return null;
+// }
