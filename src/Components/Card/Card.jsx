@@ -15,8 +15,7 @@ export default function Card({ role, hex, contrastText, onDeleteColor, id }) {
         <button
           type="button"
           style={{ color: "inherit" }}
-          // onClick={() => onDeleteColor(id)}
-          onClick={() => setIsConfirming(!isConfirming)}
+          onClick={() => setIsConfirming(true)}
         >
           Delete
         </button>
@@ -26,7 +25,6 @@ export default function Card({ role, hex, contrastText, onDeleteColor, id }) {
           <button
             type="button"
             style={{ color: "inherit" }}
-            // onClick={() => onDeleteColor(id)}
             onClick={() => setIsConfirming(false)}
           >
             Cancel
@@ -34,7 +32,6 @@ export default function Card({ role, hex, contrastText, onDeleteColor, id }) {
           <button
             type="button"
             style={{ color: "inherit" }}
-            // onClick={() => onDeleteColor(id)}
             onClick={() => onDeleteColor(id)}
           >
             Delete
