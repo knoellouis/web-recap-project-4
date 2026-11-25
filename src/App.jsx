@@ -12,20 +12,30 @@ function App() {
     const newColorWithId = { id: nanoid(), ...newColor };
     setCards([newColorWithId, ...cards]);
   }
+  function handleDeleteColor(id) {
+    const newCards = cards.filter((card) => card.id !== id);
+    setCards(newCards);
+  }
   return (
     <div className="main">
       <h1>Theme Creator</h1>
       <ColorForm onAddColor={handleAddColor} />
-      <ul className="cards">
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            hex={card.hex}
-            contrastText={card.contrastText}
-            role={card.role}
-          />
-        ))}
-      </ul>
+      {cards.length === 0 ? (
+        <p>No colors yet. Add your first color above!</p>
+      ) : (
+        <ul className="cards">
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              hex={card.hex}
+              contrastText={card.contrastText}
+              role={card.role}
+              onDeleteColor={handleDeleteColor}
+              id={card.id}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
