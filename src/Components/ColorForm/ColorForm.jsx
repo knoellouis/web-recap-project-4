@@ -1,23 +1,22 @@
 import "./ColorForm.css";
 import { useState } from "react";
+import ColorInput from "../ColorInput/ColorInput";
 
 const initialHex = "#000000";
 const initialContrastText = "#ffffff";
 const initialRole = "primary main";
 
 export default function ColorForm({ onAddColor }) {
-  const [hex, setHex] = useState(initialHex);
-  const [contrastText, setContrastText] = useState(initialContrastText);
   const [role, setRole] = useState(initialRole);
+  const [formKey, setFormKey] = useState(0);
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     onAddColor(data);
-    setHex(initialHex);
-    setContrastText(initialContrastText);
     setRole(initialRole);
+    setFormKey(formKey + 1);
   }
 
   return (
@@ -35,22 +34,20 @@ export default function ColorForm({ onAddColor }) {
         </div>
         <div className="form-field">
           <label htmlFor="hex">Hex</label>
-          <input
-            type="color"
-            name="hex"
+          <ColorInput
+            key={formKey}
+            initialColor={initialHex}
             id="hex"
-            value={hex}
-            onChange={(event) => setHex(event.target.value)}
+            name="hex"
           />
         </div>
         <div className="form-field">
           <label htmlFor="contrast-text">Contrast Text</label>
-          <input
-            type="color"
-            name="contrastText"
+          <ColorInput
+            key={formKey}
+            initialColor={initialContrastText}
             id="contrast-text"
-            value={contrastText}
-            onChange={(event) => setContrastText(event.target.value)}
+            name="contrastText"
           />
         </div>
         <button type="submit">Add Color</button>
