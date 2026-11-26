@@ -1,4 +1,5 @@
 import ColorForm from "../ColorForm/ColorForm";
+import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
 import "./Color.css";
 import { useState } from "react";
 
@@ -17,13 +18,13 @@ export default function Color({
     onUpdateColor(id, data);
     setIsEditing(false);
   }
-
   return (
     <li
       className="color-card"
       style={{ backgroundColor: hex, color: contrastText }}
     >
       <p className="color__value--background color-card-headline">{hex}</p>
+      <CopyToClipboard hex={hex} />
       <p className="color__role">{role}</p>
       <p className="color__value--contrast">{contrastText}</p>
 
