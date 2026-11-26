@@ -13,13 +13,20 @@ function App() {
     setColors([newColorWithId, ...colors]);
   }
   function handleDeleteColor(id) {
-    const newCards = colors.filter((card) => card.id !== id);
-    setColors(newCards);
+    const newColors = colors.filter((card) => card.id !== id);
+    setColors(newColors);
   }
+  function handleUpdateColor(id, updatedColor) {
+    const newColor = colors.map((color) => {
+      return color.id === id ? { id, ...updatedColor } : color;
+    });
+    setColors(newColor, ...colors);
+  }
+
   return (
     <div className="main">
       <h1>Theme Creator</h1>
-      <ColorForm onAddColor={handleAddColor} />
+      <ColorForm onSubmitColor={handleAddColor} buttonText="Add Color" />
       {colors.length === 0 ? (
         <p>No colors yet. Add your first color above!</p>
       ) : (
@@ -32,6 +39,7 @@ function App() {
               role={card.role}
               onDeleteColor={handleDeleteColor}
               id={card.id}
+              onUpdateColor={handleUpdateColor}
             />
           ))}
         </ul>

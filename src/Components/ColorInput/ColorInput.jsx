@@ -6,7 +6,6 @@ export default function ColorInput({ id, name, initialColor }) {
     <>
       <input
         type="text"
-        name="color-text"
         value={color}
         onInput={(event) => setColor(event.target.value)}
       />

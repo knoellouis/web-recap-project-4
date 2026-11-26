@@ -2,9 +2,22 @@ import ColorForm from "../ColorForm/ColorForm";
 import "./Color.css";
 import { useState } from "react";
 
-export default function Card({ role, hex, contrastText, onDeleteColor, id }) {
+export default function Color({
+  role,
+  hex,
+  contrastText,
+  onDeleteColor,
+  id,
+  onUpdateColor,
+}) {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  function handleEditColor(data) {
+    onUpdateColor(id, data);
+    setIsEditing(false);
+  }
+
   return (
     <li
       className="color-card"
@@ -16,7 +29,13 @@ export default function Card({ role, hex, contrastText, onDeleteColor, id }) {
 
       {isEditing ? (
         <>
-          <ColorForm />
+          <ColorForm
+            onSubmitColor={handleEditColor}
+            buttonText="Update Color"
+            initialHex={hex}
+            initialContrastText={contrastText}
+            initialRole={role}
+          />
           <button
             type="button"
             style={{ color: "inherit" }}

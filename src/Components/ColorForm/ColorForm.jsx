@@ -2,11 +2,17 @@ import "./ColorForm.css";
 import { useState } from "react";
 import ColorInput from "../ColorInput/ColorInput";
 
-const initialHex = "#000000";
-const initialContrastText = "#ffffff";
-const initialRole = "primary main";
+// const initialHex = "#000000";
+// const initialContrastText = "#ffffff";
+// const initialRole = "primary main";
 
-export default function ColorForm({ onAddColor }) {
+export default function ColorForm({
+  onSubmitColor,
+  buttonText,
+  initialHex = "#000000",
+  initialRole = "primary main",
+  initialContrastText = "#ffffff",
+}) {
   const [role, setRole] = useState(initialRole);
   const [formKey, setFormKey] = useState(0);
 
@@ -14,11 +20,10 @@ export default function ColorForm({ onAddColor }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    onAddColor(data);
+    onSubmitColor(data);
     setRole(initialRole);
     setFormKey(formKey + 1);
   }
-
   return (
     <>
       <form className="form__color-picker" onSubmit={handleSubmit}>
@@ -50,7 +55,9 @@ export default function ColorForm({ onAddColor }) {
             name="contrastText"
           />
         </div>
-        <button type="submit">Add Color</button>
+        <button type="submit" style={{ color: "inherit" }}>
+          {buttonText}
+        </button>
       </form>
     </>
   );
