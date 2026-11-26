@@ -5,9 +5,11 @@ export default function CopyToClipboard({ hex }) {
 
   useEffect(() => {
     if (isCopied) {
-      setTimeout(() => {
+      const intervalId = setTimeout(() => {
         setIsCopied(false);
       }, 3000);
+
+      return () => clearTimeout(intervalId);
     }
   }, [isCopied]);
 
@@ -20,7 +22,7 @@ export default function CopyToClipboard({ hex }) {
     }
   }
   return (
-    <button type="button" onClick={() => handleCopy(hex)}>
+    <button type="button" onClick={() => handleCopy(hex)} disabled={isCopied}>
       {isCopied ? "Copied" : "Copy"}
     </button>
   );
