@@ -4,10 +4,13 @@ export default function CopyToClipboard({ hex }) {
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 3000);
+    if (isCopied) {
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 3000);
+    }
   }, [isCopied]);
+
   async function handleCopy(hex) {
     try {
       await navigator.clipboard.writeText(hex);
