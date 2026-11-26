@@ -1,5 +1,6 @@
 import ColorForm from "../ColorForm/ColorForm";
 import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
+import ContrastChecker from "../ContrastChecker/ContrastChecker";
 import "./Color.css";
 import { useState } from "react";
 
@@ -27,7 +28,7 @@ export default function Color({
       <CopyToClipboard hex={hex} />
       <p className="color__role">{role}</p>
       <p className="color__value--contrast">{contrastText}</p>
-
+      <ContrastChecker hex={hex} contrastText={contrastText} />
       {isEditing ? (
         <>
           <ColorForm
