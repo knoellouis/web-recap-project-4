@@ -25,13 +25,13 @@ export default function ContrastChecker({ hex, contrastText }) {
       return colorData.fail;
     }
   }
-
+  const result = ratioResults(data);
   return (
     <div
       style={{
-        backgroundColor: ratioResults(data).color,
-        color: ratioResults(data).textColor,
+        backgroundColor: result.color,
+        color: result.textColor,
       }}
-    >{`Overall contrast score: ${data.ratio} - ${ratioResults(data).text}!`}</div>
+    >{`Overall contrast score: ${data.ratio} - ${result.text}!`}</div>
   );
 }
