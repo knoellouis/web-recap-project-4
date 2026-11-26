@@ -1,31 +1,31 @@
 import { useState } from "react";
 import { initialColors } from "./lib/colors";
 import { nanoid } from "nanoid";
-import Card from "./Components/Card/Card";
+import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import "./App.css";
 
 function App() {
-  const [cards, setCards] = useState(initialColors);
+  const [colors, setColors] = useState(initialColors);
 
   function handleAddColor(newColor) {
     const newColorWithId = { id: nanoid(), ...newColor };
-    setCards([newColorWithId, ...cards]);
+    setColors([newColorWithId, ...colors]);
   }
   function handleDeleteColor(id) {
-    const newCards = cards.filter((card) => card.id !== id);
-    setCards(newCards);
+    const newCards = colors.filter((card) => card.id !== id);
+    setColors(newCards);
   }
   return (
     <div className="main">
       <h1>Theme Creator</h1>
       <ColorForm onAddColor={handleAddColor} />
-      {cards.length === 0 ? (
+      {colors.length === 0 ? (
         <p>No colors yet. Add your first color above!</p>
       ) : (
         <ul className="cards">
-          {cards.map((card) => (
-            <Card
+          {colors.map((card) => (
+            <Color
               key={card.id}
               hex={card.hex}
               contrastText={card.contrastText}
