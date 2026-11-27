@@ -17,6 +17,7 @@ function App() {
   });
   const [selectedThemeId, setSelectedThemeId] = useState("t1");
   const [isEditingTheme, setIsEditingTheme] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId);
 
@@ -54,7 +55,7 @@ function App() {
 
   function handleAddTheme(event) {
     event.preventDefault();
-    const name = new FormData(event.target).get("name");
+    const name = new FormData(event.target).get("theme-name");
     const newTheme = { id: nanoid(), name, colors: [] };
     setThemes([...themes, newTheme]);
     setSelectedThemeId(newTheme.id);
@@ -62,15 +63,17 @@ function App() {
   }
 
   function handleDeleteTheme() {
+    if (selectedTheme.id === "t1") return;
     const idsToRemove = selectedTheme.colors;
     setColors(colors.filter((color) => !idsToRemove.includes(color.id)));
     setThemes(themes.filter((theme) => theme.id !== selectedThemeId));
     setSelectedThemeId("t1");
+    setIsConfirmingDelete(false);
   }
 
   function handleEditTheme(event) {
     event.preventDefault();
-    const name = new FormData(event.target).get("name");
+    const name = new FormData(event.target).get("theme-name");
     setThemes(
       themes.map((theme) =>
         theme.id === selectedThemeId ? { ...theme, name } : theme,
@@ -82,39 +85,62 @@ function App() {
   return (
     <div className="main">
       <h1>Theme Creator</h1>
-      <select
-        value={selectedThemeId}
-        onChange={(event) => {
-          setSelectedThemeId(event.target.value);
-          setIsEditingTheme(false);
-        }}
-      >
-        {themes.map((theme) => (
-          <option key={theme.id} value={theme.id}>
-            {theme.name}
-          </option>
-        ))}
-      </select>
-      <button
-        type="button"
-        onClick={() => setIsEditingTheme(true)}
-        disabled={selectedTheme.id === "t1"}
-      >
-        Edit Theme
-      </button>
-      <button
-        type="button"
-        onClick={handleDeleteTheme}
-        disabled={selectedTheme.id === "t1"}
-      >
-        Delete Theme
-      </button>
+      <div className="theme-bar">
+        <select
+          name="theme-select"
+          id="theme-select"
+          value={selectedThemeId}
+          onChange={(event) => {
+            setSelectedThemeId(event.target.value);
+            setIsEditingTheme(false);
+            setIsConfirmingDelete(false);
+          }}
+        >
+          {themes.map((theme) => (
+            <option key={theme.id} value={theme.id}>
+              {theme.name}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          onClick={() => setIsEditingTheme(true)}
+          disabled={selectedTheme.id === "t1"}
+        >
+          Edit Theme
+        </button>
+        {isConfirmingDelete ? (
+          <>
+            <span className="color-card-highlight">
+              Really delete this theme?
+            </span>
+            <button type="button" onClick={() => setIsConfirmingDelete(false)}>
+              Cancel
+            </button>
+            <button type="button" onClick={handleDeleteTheme}>
+              Delete
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsConfirmingDelete(true)}
+            disabled={selectedTheme.id === "t1"}
+          >
+            Delete Theme
+          </button>
+        )}
+      </div>
 
       {isEditingTheme ? (
-        <form key={selectedThemeId} onSubmit={handleEditTheme}>
+        <form
+          className="theme-form"
+          key={selectedThemeId}
+          onSubmit={handleEditTheme}
+        >
           <input
             type="text"
-            name="name"
+            name="theme-name"
             defaultValue={selectedTheme.name}
             required
           />
@@ -124,10 +150,10 @@ function App() {
           </button>
         </form>
       ) : (
-        <form onSubmit={handleAddTheme}>
+        <form className="theme-form" onSubmit={handleAddTheme}>
           <input
             type="text"
-            name="name"
+            name="theme-name"
             placeholder="New theme name"
             required
           />
