@@ -82,7 +82,7 @@ function App() {
   return (
     <div className="main">
       <h1>Theme Creator</h1>
-      <form>
+      <div className="theme-bar">
         <select
           name="theme-select"
           id="theme-select"
@@ -112,7 +112,7 @@ function App() {
         >
           Delete Theme
         </button>
-      </form>
+      </div>
 
       {isEditingTheme ? (
         <form key={selectedThemeId} onSubmit={handleEditTheme}>
@@ -128,7 +128,7 @@ function App() {
           </button>
         </form>
       ) : (
-        <form onSubmit={handleAddTheme}>
+        <form className="theme-form" onSubmit={handleAddTheme}>
           <input
             type="text"
             name="name"
