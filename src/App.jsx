@@ -66,6 +66,17 @@ function App() {
     setSelectedThemeId("t1");
   }
 
+  function handleEditTheme(event) {
+    event.preventDefault();
+    const name = new FormData(event.target).get("name");
+    setThemes(
+      themes.map((theme) =>
+        theme.id === selectedThemeId ? { ...theme, name } : theme,
+      ),
+    );
+    setIsEditingTheme(false);
+  }
+
   return (
     <div className="main">
       <h1>Theme Creator</h1>
