@@ -83,6 +83,8 @@ function App() {
     <div className="main">
       <h1>Theme Creator</h1>
       <select
+        name="theme-select"
+        id="theme-select"
         value={selectedThemeId}
         onChange={(event) => {
           setSelectedThemeId(event.target.value);
@@ -114,7 +116,7 @@ function App() {
         <form key={selectedThemeId} onSubmit={handleEditTheme}>
           <input
             type="text"
-            name="name"
+            name="theme-name"
             defaultValue={selectedTheme.name}
             required
           />

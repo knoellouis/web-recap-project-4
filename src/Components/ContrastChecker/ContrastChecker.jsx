@@ -3,35 +3,43 @@ import "./ContrastChecker.css";
 
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
+const labels = {
+  pass: "Passed",
+  almost: "Almost there, Large text only",
+  fail: "Failed",
+};
+
+function getLevel(data) {
+  if (data.AA === "pass") return "pass";
+  if (data.AALarge === "pass") return "almost";
+  return "fail";
+}
+
 export default function ContrastChecker({ hex, contrastText }) {
   const { data, error, isLoading } = useSWR(
     `https://webaim.org/resources/contrastchecker/?fcolor=${contrastText.replace("#", "")}&bcolor=${hex.replace("#", "")}&api`,
     fetcher,
   );
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
 
-  function ratioResults(data) {
-    const colorData = {
-      pass: { text: "passed", color: "green", textColor: "white" },
-      inBetween: { text: "not quite", color: "orange", textColor: "black" },
-      fail: { text: "failed", color: "red", textColor: "black" },
-    };
-    if (data.AA === "pass" && data.AALarge === "pass") {
-      return colorData.pass;
-    } else if (data.AA === "fail" && data.AALarge === "pass") {
-      return colorData.inBetween;
-    } else if (data.AA === "fail" && data.AALarge === "fail") {
-      return colorData.fail;
-    }
-  }
-  const result = ratioResults(data);
+  if (error)
+    return (
+      <div className="contrast-badge" data-level="error">
+        Check failed
+      </div>
+    );
+  if (isLoading)
+    return (
+      <div className="contrast-badge" data-level="loading">
+        Checking contrast…
+      </div>
+    );
+
+  const level = getLevel(data);
+
   return (
-    <div
-      style={{
-        backgroundColor: result.color,
-        color: result.textColor,
-      }}
-    >{`Overall contrast score: ${data.ratio} - ${result.text}!`}</div>
+    <div className="contrast-badge" data-level={level}>
+      <span className="contrast-ratio">{data.ratio}</span>
+      <span>{labels[level]}</span>
+    </div>
   );
 }
