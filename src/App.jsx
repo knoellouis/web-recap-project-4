@@ -82,7 +82,10 @@ function App() {
       <h1>Theme Creator</h1>
       <select
         value={selectedThemeId}
-        onChange={(event) => setSelectedThemeId(event.target.value)}
+        onChange={(event) => {
+          setSelectedThemeId(event.target.value);
+          setIsEditingTheme(false);
+        }}
       >
         {themes.map((theme) => (
           <option key={theme.id} value={theme.id}>
@@ -90,24 +93,45 @@ function App() {
           </option>
         ))}
       </select>
-      <form onSubmit={handleAddTheme}>
-        <input type="text" name="name" placeholder="New theme name" required />
-        <button type="submit">Add Theme</button>
-        {/* <button
-          type="button"
-          onClick={handleEditTheme}
-          disabled={selectedTheme.id === "t1"}
-        >
-          Edit Theme
-        </button> */}
-        <button
-          type="button"
-          onClick={handleDeleteTheme}
-          disabled={selectedTheme.id === "t1"}
-        >
-          Delete Theme
-        </button>
-      </form>
+      <button
+        type="button"
+        onClick={() => setIsEditingTheme(true)}
+        disabled={selectedTheme.id === "t1"}
+      >
+        Edit Theme
+      </button>
+      <button
+        type="button"
+        onClick={handleDeleteTheme}
+        disabled={selectedTheme.id === "t1"}
+      >
+        Delete Theme
+      </button>
+
+      {isEditingTheme ? (
+        <form key={selectedThemeId} onSubmit={handleEditTheme}>
+          <input
+            type="text"
+            name="name"
+            defaultValue={selectedTheme.name}
+            required
+          />
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => setIsEditingTheme(false)}>
+            Cancel
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleAddTheme}>
+          <input
+            type="text"
+            name="name"
+            placeholder="New theme name"
+            required
+          />
+          <button type="submit">Add Theme</button>
+        </form>
+      )}
       <ColorForm onSubmitColor={handleAddColor} buttonText="Add Color" />
       {visibleColors.length === 0 ? (
         <p>No colors yet. Add your first color above!</p>
