@@ -82,35 +82,37 @@ function App() {
   return (
     <div className="main">
       <h1>Theme Creator</h1>
-      <select
-        name="theme-select"
-        id="theme-select"
-        value={selectedThemeId}
-        onChange={(event) => {
-          setSelectedThemeId(event.target.value);
-          setIsEditingTheme(false);
-        }}
-      >
-        {themes.map((theme) => (
-          <option key={theme.id} value={theme.id}>
-            {theme.name}
-          </option>
-        ))}
-      </select>
-      <button
-        type="button"
-        onClick={() => setIsEditingTheme(true)}
-        disabled={selectedTheme.id === "t1"}
-      >
-        Edit Theme
-      </button>
-      <button
-        type="button"
-        onClick={handleDeleteTheme}
-        disabled={selectedTheme.id === "t1"}
-      >
-        Delete Theme
-      </button>
+      <form>
+        <select
+          name="theme-select"
+          id="theme-select"
+          value={selectedThemeId}
+          onChange={(event) => {
+            setSelectedThemeId(event.target.value);
+            setIsEditingTheme(false);
+          }}
+        >
+          {themes.map((theme) => (
+            <option key={theme.id} value={theme.id}>
+              {theme.name}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          onClick={() => setIsEditingTheme(true)}
+          disabled={selectedTheme.id === "t1"}
+        >
+          Edit Theme
+        </button>
+        <button
+          type="button"
+          onClick={handleDeleteTheme}
+          disabled={selectedTheme.id === "t1"}
+        >
+          Delete Theme
+        </button>
+      </form>
 
       {isEditingTheme ? (
         <form key={selectedThemeId} onSubmit={handleEditTheme}>
