@@ -16,7 +16,9 @@ function App() {
     defaultValue: initialThemes,
   });
   const [selectedThemeId, setSelectedThemeId] = useState("t1");
+
   const [isEditingTheme, setIsEditingTheme] = useState(false);
+
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId);
@@ -36,6 +38,7 @@ function App() {
       ),
     );
   }
+
   function handleDeleteColor(id) {
     const newColors = colors.filter((card) => card.id !== id);
     setColors(newColors);
@@ -46,6 +49,7 @@ function App() {
       })),
     );
   }
+
   function handleUpdateColor(id, updatedColor) {
     const newColor = colors.map((color) => {
       return color.id === id ? { id, ...updatedColor } : color;
