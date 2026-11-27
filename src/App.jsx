@@ -17,6 +17,7 @@ function App() {
   });
   const [selectedThemeId, setSelectedThemeId] = useState("t1");
   const [isEditingTheme, setIsEditingTheme] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId);
 
@@ -62,10 +63,12 @@ function App() {
   }
 
   function handleDeleteTheme() {
+    if (selectedTheme.id === "t1") return;
     const idsToRemove = selectedTheme.colors;
     setColors(colors.filter((color) => !idsToRemove.includes(color.id)));
     setThemes(themes.filter((theme) => theme.id !== selectedThemeId));
     setSelectedThemeId("t1");
+    setIsConfirmingDelete(false);
   }
 
   function handleEditTheme(event) {
@@ -90,6 +93,7 @@ function App() {
           onChange={(event) => {
             setSelectedThemeId(event.target.value);
             setIsEditingTheme(false);
+            setIsConfirmingDelete(false);
           }}
         >
           {themes.map((theme) => (
@@ -105,13 +109,27 @@ function App() {
         >
           Edit Theme
         </button>
-        <button
-          type="button"
-          onClick={handleDeleteTheme}
-          disabled={selectedTheme.id === "t1"}
-        >
-          Delete Theme
-        </button>
+        {isConfirmingDelete ? (
+          <>
+            <span className="color-card-highlight">
+              Really delete this theme?
+            </span>
+            <button type="button" onClick={() => setIsConfirmingDelete(false)}>
+              Cancel
+            </button>
+            <button type="button" onClick={handleDeleteTheme}>
+              Delete
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsConfirmingDelete(true)}
+            disabled={selectedTheme.id === "t1"}
+          >
+            Delete Theme
+          </button>
+        )}
       </div>
 
       {isEditingTheme ? (
