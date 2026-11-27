@@ -12,7 +12,9 @@ function App() {
     defaultValue: [...initialColors],
   });
 
-  const [themes, setThemes] = useState(initialThemes);
+  const [themes, setThemes] = useLocalStorageState("themes", {
+    defaultValue: initialThemes,
+  });
   const [selectedThemeId, setSelectedThemeId] = useState("t1");
   const [isEditingTheme, setIsEditingTheme] = useState(false);
 
