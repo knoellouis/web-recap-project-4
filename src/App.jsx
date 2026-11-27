@@ -133,7 +133,11 @@ function App() {
       </div>
 
       {isEditingTheme ? (
-        <form key={selectedThemeId} onSubmit={handleEditTheme}>
+        <form
+          className="theme-form"
+          key={selectedThemeId}
+          onSubmit={handleEditTheme}
+        >
           <input
             type="text"
             name="theme-name"
