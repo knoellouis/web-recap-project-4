@@ -55,7 +55,7 @@ function App() {
 
   function handleAddTheme(event) {
     event.preventDefault();
-    const name = new FormData(event.target).get("name");
+    const name = new FormData(event.target).get("theme-name");
     const newTheme = { id: nanoid(), name, colors: [] };
     setThemes([...themes, newTheme]);
     setSelectedThemeId(newTheme.id);
@@ -73,7 +73,7 @@ function App() {
 
   function handleEditTheme(event) {
     event.preventDefault();
-    const name = new FormData(event.target).get("name");
+    const name = new FormData(event.target).get("theme-name");
     setThemes(
       themes.map((theme) =>
         theme.id === selectedThemeId ? { ...theme, name } : theme,
@@ -153,7 +153,7 @@ function App() {
         <form className="theme-form" onSubmit={handleAddTheme}>
           <input
             type="text"
-            name="name"
+            name="theme-name"
             placeholder="New theme name"
             required
           />
