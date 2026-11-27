@@ -2,10 +2,6 @@ import "./ColorForm.css";
 import { useState } from "react";
 import ColorInput from "../ColorInput/ColorInput";
 
-// const initialHex = "#000000";
-// const initialContrastText = "#ffffff";
-// const initialRole = "primary main";
-
 export default function ColorForm({
   onSubmitColor,
   buttonText,

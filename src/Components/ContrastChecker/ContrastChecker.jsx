@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import "./ContrastChecker.css";
 
+// passes all arguments to fetch (...args) and turns the response into JSON.
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const labels = {
@@ -15,7 +16,10 @@ function getLevel(data) {
   return "fail";
 }
 
+// When hex changes, the URL changes, and SWR fetches again by itself. No useEffect needed
+
 export default function ContrastChecker({ hex, contrastText }) {
+  //takes a key (here the URL) and a fetcher function. It fetches, caches by key, and gives you data, error and isLoading
   const { data, error, isLoading } = useSWR(
     `https://webaim.org/resources/contrastchecker/?fcolor=${contrastText.replace("#", "")}&bcolor=${hex.replace("#", "")}&api`,
     fetcher,
@@ -37,6 +41,7 @@ export default function ContrastChecker({ hex, contrastText }) {
   const level = getLevel(data);
 
   return (
+    // CSS style by state e.g. .contrast-badge[data-level="fail"]
     <div className="contrast-badge" data-level={level}>
       <span className="contrast-ratio">{data.ratio}</span>
       <span>{labels[level]}</span>
