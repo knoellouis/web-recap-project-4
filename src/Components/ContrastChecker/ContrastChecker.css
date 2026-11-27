@@ -1,0 +1,14 @@
+.contrast-badge {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.copy-button {
+  width: fit-content;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+}
